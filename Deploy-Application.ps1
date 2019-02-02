@@ -63,15 +63,15 @@ Try {
 	##* VARIABLE DECLARATION
 	##*===============================================
 	## Variables: Application
-	[string]$appVendor = ''
-	[string]$appName = ''
-	[string]$appVersion = ''
-	[string]$appArch = ''
+	[string]$appVendor = 'Synergy Software'
+	[string]$appName = 'KalediaGraph'
+	[string]$appVersion = '4.5'
+	[string]$appArch = 'x86'
 	[string]$appLang = 'EN'
 	[string]$appRevision = '01'
 	[string]$appScriptVersion = '3.7.0.1'
-	[string]$appScriptDate = '03/22/2018'
-	[string]$appScriptAuthor = '<author name>'
+	[string]$appScriptDate = '02/02/2019'
+	[string]$appScriptAuthor = 'Truong Nguyen'
 	##*===============================================
 	## Variables: Install Titles (Only set here to override defaults set by the toolkit)
 	[string]$installName = ''
@@ -119,7 +119,7 @@ Try {
 		[string]$installPhase = 'Pre-Installation'
 
 		## Show Welcome Message, close Internet Explorer if needed, verify there is enough disk space to complete the install, and persist the prompt
-		Show-InstallationWelcome -CloseApps 'iexplore' -CheckDiskSpace -PersistPrompt
+		Show-InstallationWelcome -CloseApps 'KGraph' -CheckDiskSpace -PersistPrompt
 
 		## Show Progress Message (with the default message)
 		Show-InstallationProgress
@@ -139,7 +139,7 @@ Try {
 		}
 
 		## <Perform Installation tasks here>
-
+		Execute-Process -Path "$dirFiles\KG45WINDEMO.exe" -Parameters '-s' -WindowStyle 'Hidden' -PassThru
 
 		##*===============================================
 		##* POST-INSTALLATION
@@ -161,7 +161,7 @@ Try {
 		[string]$installPhase = 'Pre-Uninstallation'
 
 		## Show Welcome Message, close Internet Explorer with a 60 second countdown before automatically closing
-		Show-InstallationWelcome -CloseApps 'iexplore' -CloseAppsCountdown 60
+		Show-InstallationWelcome -CloseApps 'KGraph' -CloseAppsCountdown 60
 
 		## Show Progress Message (with the default message)
 		Show-InstallationProgress
@@ -181,6 +181,7 @@ Try {
 		}
 
 		# <Perform Uninstallation tasks here>
+		Execute-Process -Path "C:\Windows\unvise32.exe" -Parameters '/s C:\Program Files (x86)\KaleidaGraph 4.5 Demo\uninstal.log' -WindowStyle 'Hidden' -PassThru
 
 
 		##*===============================================
