@@ -131,7 +131,7 @@ Try {
 			Remove-Folder -Path "$envProgramFilesX86\KaleidaGraph 4.5 Demo"
 		}
 		Remove-Folder -Path "$envCommonPrograms\KaleidaGraph 4.5 Demo"
-				
+
 		##*===============================================
 		##* INSTALLATION
 		##*===============================================
