@@ -130,7 +130,7 @@ Try {
 			Write-Log -Message 'KalediaGraph 4.5 Demo will be uninstalled.' -Source $deployAppScriptFriendlyName
 			Remove-Folder -Path "$envProgramFilesX86\KaleidaGraph 4.5 Demo"
 		}
-		Remove-Folder -Path "$envCommonPrograms\KaleidaGraph 4.5 Demo"
+		Remove-Folder -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\KaleidaGraph 4.5 Demo"
 
 		##*===============================================
 		##* INSTALLATION
@@ -145,7 +145,7 @@ Try {
 
 		## <Perform Installation tasks here>
 		## Copy Network Installer from Files to C:\Program Files (x86)
-		Copy-File -Path "$dirFiles\KaleidaGraph 4.5" -Destination "$envProgramFilesX86\"
+		Copy-File -Path "$dirFiles\KaleidaGraph 4.5" -Destination "$envProgramFilesX86\" -Recurse
 
 		##*===============================================
 		##* POST-INSTALLATION
@@ -154,7 +154,7 @@ Try {
 
 		## <Perform Post-Installation tasks here>
 		## Copy shortcuts from SupportFiles Directory to Start Menu
-		Copy-File -Path "$dirSupportFiles\KaleidaGraph 4.5" -Destination "$envCommonPrograms\" -Recurse
+		Copy-File -Path "$dirSupportFiles\KaleidaGraph 4.5" -Destination "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\" -Recurse
 
 		## Display a message at the end of the install
 		If (-not $useDefaultMsi) {
@@ -199,7 +199,7 @@ Try {
 
 		## <Perform Post-Uninstallation tasks here>
 		## Delete shortcuts from Start Menu
-		Remove-Folder -Path "$envCommonPrograms\KaleidaGraph 4.5"
+		Remove-Folder -Path "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\KaleidaGraph 4.5"
 
 	}
 
