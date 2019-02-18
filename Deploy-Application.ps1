@@ -65,12 +65,12 @@ Try {
 	## Variables: Application
 	[string]$appVendor = 'Synergy Software'
 	[string]$appName = 'KalediaGraph'
-	[string]$appVersion = '4.5'
+	[string]$appVersion = '4.5.4'
 	[string]$appArch = 'x86'
 	[string]$appLang = 'EN'
 	[string]$appRevision = '01'
 	[string]$appScriptVersion = '3.7.0.1'
-	[string]$appScriptDate = '02/02/2019'
+	[string]$appScriptDate = '02/18/2019'
 	[string]$appScriptAuthor = 'Truong Nguyen'
 	##*===============================================
 	## Variables: Install Titles (Only set here to override defaults set by the toolkit)
@@ -125,8 +125,13 @@ Try {
 		Show-InstallationProgress
 
 		## <Perform Pre-Installation tasks here>
-
-
+		## Uninstall KalediaGraph 4.5 Demo
+		If (Test-Path -LiteralPath (Join-Path -Path $envSystemDrive -ChildPath "$envProgramFilesX86\KaleidaGraph 4.5 Demo\KGraph.exe") -PathType 'Leaf') {
+			Write-Log -Message 'KalediaGraph 4.5 Demo will be uninstalled.' -Source $deployAppScriptFriendlyName
+			Remove-Folder -Path "$envProgramFilesX86\KaleidaGraph 4.5 Demo"
+		}
+		Remove-Folder -Path "$envCommonPrograms\KaleidaGraph 4.5 Demo"
+		
 		##*===============================================
 		##* INSTALLATION
 		##*===============================================
@@ -139,7 +144,8 @@ Try {
 		}
 
 		## <Perform Installation tasks here>
-		Execute-Process -Path "$dirFiles\KG45WINDEMO.exe" -Parameters '-s' -WindowStyle 'Hidden' -PassThru
+		## Copy Network Installer from Files to C:\Program Files (x86)
+		Copy-File -Path "$dirFiles\KaleidaGraph 4.5" -Destination "$envProgramFilesX86\"
 
 		##*===============================================
 		##* POST-INSTALLATION
@@ -147,6 +153,8 @@ Try {
 		[string]$installPhase = 'Post-Installation'
 
 		## <Perform Post-Installation tasks here>
+		## Copy shortcuts from SupportFiles Directory to Start Menu
+		Copy-File -Path "$dirSupportFiles\KaleidaGraph 4.5" -Destination "$envCommonPrograms\" -Recurse
 
 		## Display a message at the end of the install
 		If (-not $useDefaultMsi) {
@@ -181,8 +189,8 @@ Try {
 		}
 
 		# <Perform Uninstallation tasks here>
-		Execute-Process -Path "C:\Windows\unvise32.exe" -Parameters '/s C:\Program Files (x86)\KaleidaGraph 4.5 Demo\uninstal.log' -WindowStyle 'Hidden' -PassThru
-
+		## Delete KaleidaGraph from Program Files (x86)
+		Remove-Folder -Path "$envProgramFilesX86\KaleidaGraph 4.5"
 
 		##*===============================================
 		##* POST-UNINSTALLATION
@@ -190,7 +198,8 @@ Try {
 		[string]$installPhase = 'Post-Uninstallation'
 
 		## <Perform Post-Uninstallation tasks here>
-
+		## Delete shortcuts from Start Menu
+		Remove-Folder -Path "$envCommonPrograms\KaleidaGraph 4.5"
 
 	}
 
